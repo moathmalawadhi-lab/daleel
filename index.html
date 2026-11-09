@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>وين الدار؟ — دليل معرض الكويت الدولي للكتاب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Lalezar&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4efe6; --card:#fffdf8; --ink:#1d2624; --muted:#5f655f; --line:#e3d9c7;
+  --green:#1f5e57; --green2:#2f7d73; --maroon:#7a2a2a; --gold:#d9a441; --floor:#fbf7ef; --floor2:#efe6d4;
+  --shadow:0 10px 30px -12px rgba(31,40,38,.25);
+}
+html{font-size:16px} html.fs2{font-size:19px} html.fs3{font-size:22.5px}
+body.hc{--paper:#fff;--card:#fff;--ink:#000;--muted:#1b1b1b;--line:#000;--green:#00463f;--maroon:#6b0000;--floor:#fff;--floor2:#ddd}
+body.hc .item,body.hc .chip,body.hc .field,body.hc .stat,body.hc .hallcard{border-width:2px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:"Baloo Bhaijaan 2",system-ui,sans-serif}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit;font-size:inherit}
+button:focus-visible,input:focus-visible,.item:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px 130px}
+
+/* ---------- top / a11y ---------- */
+.a11y{display:flex;gap:6px;justify-content:flex-start;padding-top:12px;flex-wrap:wrap}
+.a11y button{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:.4rem .8rem;font-size:.82rem;font-weight:600;color:var(--ink)}
+.a11y button.on{background:var(--ink);color:var(--paper)}
+.hero{padding:14px 0 10px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:56px;height:56px;border-radius:18px;background:var(--green);display:grid;place-items:center;box-shadow:var(--shadow);flex:none}
+.logo svg{width:32px;height:32px}
+h1{font-family:"Lalezar",sans-serif;font-size:2.2rem;margin:0;line-height:1.1;color:var(--green)}
+h1 span{color:var(--maroon)}
+.sub{margin:6px 0 0;color:var(--muted);font-size:.95rem}
+.stats{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem;font-size:.85rem;color:var(--muted)}
+.stat b{color:var(--green);font-size:1rem}
+
+/* ---------- halls strip (drawn mini maps) ---------- */
+.sect{font-family:"Lalezar",sans-serif;color:var(--green);font-size:1.15rem;margin:22px 2px 10px}
+.halls{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:620px){.halls{grid-template-columns:repeat(2,1fr)}}
+.hallcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px;text-align:center;box-shadow:var(--shadow);transition:transform .15s}
+.hallcard:active{transform:scale(.97)}
+.hallcard svg{width:100%;height:82px;display:block}
+.hallcard b{display:block;margin-top:6px;font-size:.95rem}
+.hallcard small{color:var(--muted);font-size:.78rem}
+.hallcard.kids{background:linear-gradient(160deg,#fff4dc,#ffe6ef);border-color:#f2c9a0}
+
+/* ---------- Search ---------- */
+.searchbox{position:sticky;top:0;z-index:20;background:linear-gradient(var(--paper) 80%,transparent);padding:10px 0 12px}
+.field{display:flex;align-items:center;gap:8px;background:var(--card);border:2px solid var(--line);border-radius:18px;padding:6px 8px 6px 14px;box-shadow:var(--shadow)}
+.field:focus-within{border-color:var(--green2)}
+.field>svg{flex:none;width:24px;height:24px;color:var(--green)}
+.field input{flex:1;min-width:0;border:0;outline:0;background:none;font:inherit;font-size:1.08rem;padding:.6rem 0;color:var(--ink)}
+.field input::placeholder{color:#97978f}
+.clear{width:36px;height:36px;border-radius:10px;color:var(--muted);display:none}
+.clear.on{display:grid;place-items:center}
+.surprise{flex:none;display:flex;align-items:center;gap:6px;background:var(--maroon);color:#fff;border-radius:12px;padding:.6rem .8rem;font-weight:600;font-size:.9rem}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:.45rem .9rem;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:.9rem;color:var(--ink);white-space:nowrap}
+.chip small{display:inline-block;color:var(--muted);margin-inline-start:6px;background:rgba(0,0,0,.05);border-radius:999px;padding:0 7px;font-size:.75rem}
+.chip.on{background:var(--green);color:#fff;border-color:var(--green)}
+.chip.on small{color:#e7f3f0;background:rgba(255,255,255,.18)}
+.chips.countries .chip{font-size:.83rem}
+.chips.countries .chip.on{background:var(--maroon);border-color:var(--maroon)}
+
+/* ---------- Results ---------- */
+.meta{display:flex;justify-content:space-between;align-items:center;margin:14px 2px 8px;color:var(--muted);font-size:.85rem}
+.hint{background:#fff6e2;border:1px dashed var(--gold);border-radius:14px;padding:10px 14px;margin:6px 0 10px;font-size:.9rem;color:#3b3220}
+.list{display:grid;gap:10px}
+.item{display:flex;align-items:stretch;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;animation:rise .35s both;cursor:pointer}
+.item:active{transform:scale(.985)}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.tag{flex:none;width:5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#fff;padding:10px 4px}
+.tag .bn{font-weight:700;font-size:1.15rem;direction:ltr}
+.tag .hn{font-size:.72rem;opacity:.95}
+.t-h5{background:#1f5e57} .t-h6{background:#7a2a2a} .t-h7{background:#3e4a6b} .t-kids{background:#b5672b}
+.body{flex:1;min-width:0;padding:12px 14px}
+.name{font-weight:600;font-size:1rem;line-height:1.5}
+.name mark{background:#fde9b4;color:inherit;border-radius:4px;padding:0 2px}
+.cty{font-size:.82rem;color:var(--muted);margin-top:3px}
+.star{flex:none;width:3.3rem;display:grid;place-items:center;color:#bdb3a2}
+.star svg{width:26px;height:26px;transition:transform .25s}
+.star.on{color:var(--gold)}
+.star.on svg{transform:scale(1.15) rotate(-12deg)}
+.empty{text-align:center;color:var(--muted);padding:40px 10px;line-height:1.9}
+.more{display:block;margin:14px auto;padding:.7rem 1.2rem;border-radius:12px;background:var(--card);border:1px solid var(--line);font-weight:600;color:var(--green)}
+
+/* ---------- dock ---------- */
+.dock{position:fixed;inset-inline:0;bottom:14px;z-index:30;display:flex;justify-content:center;pointer-events:none}
+.dock button{pointer-events:auto;display:flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);border-radius:999px;padding:.8rem 1.3rem;font-weight:600;box-shadow:0 14px 30px -10px rgba(0,0,0,.5);transform:translateY(140px);transition:transform .35s cubic-bezier(.2,1.4,.4,1)}
+.dock button.on{transform:none}
+.dock .cnt{background:var(--gold);color:#1d2624;border-radius:999px;min-width:26px;height:26px;display:grid;place-items:center;font-size:.9rem}
+
+/* ---------- sheets ---------- */
+.sheet{position:fixed;inset:0;z-index:50;display:none;flex-direction:column;background:var(--paper)}
+.sheet.open{display:flex;animation:fade .25s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.bar{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card);border-bottom:1px solid var(--line)}
+.bar h2{flex:1;margin:0;font-size:1.1rem;font-family:"Lalezar",sans-serif;color:var(--green)}
+.icon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:#f1ebdf;color:#1d2624;flex:none}
+.icon svg{width:22px;height:22px}
+
+/* ---------- drawn map ---------- */
+.viewport{position:relative;flex:1;overflow:hidden;touch-action:none;cursor:grab;
+  background:radial-gradient(circle at 20% 10%,#e9f1ee 0,transparent 45%),radial-gradient(circle at 90% 90%,#f6e7d4 0,transparent 40%),#ece6da}
+body.hc .viewport{background:#e8e8e8}
+.viewport.drag{cursor:grabbing}
+.stage{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+.stage.anim{transition:transform .75s cubic-bezier(.22,.9,.25,1)}
+.stage svg{display:block;overflow:visible}
+.floor{fill:var(--floor);stroke:#d8ccb4;stroke-width:3}
+.corr{fill:none;stroke:var(--floor);stroke-linecap:round;stroke-linejoin:round}
+.corrEdge{fill:none;stroke:#d8ccb4;stroke-linecap:round;stroke-linejoin:round}
+.bt rect{stroke-width:2;transition:fill .3s,opacity .3s}
+.bt .num{font:700 15px "Baloo Bhaijaan 2",sans-serif;text-anchor:middle;dominant-baseline:central;direction:ltr;pointer-events:none}
+.bt .nm{font:600 7.5px "Baloo Bhaijaan 2",sans-serif;text-anchor:middle;dominant-baseline:central;fill:#1d2624;pointer-events:none;opacity:0;transition:opacity .3s}
+.zoomed .bt .nm{opacity:1}
+.zoomed .bt .num{transform:translateY(-6px)}
+.bt{cursor:pointer}
+.bt .vs{display:none}
+.bt.v .vs{display:inline}
+svg.focus .bt rect{opacity:.38}
+svg.focus .bt.nb rect,svg.focus .bt.sel rect{opacity:1}
+.bt.nb rect{stroke:#d9a441!important;stroke-width:4}
+.bt.sel rect{fill:#7a2a2a!important;stroke:#fff!important;stroke-width:4}
+.bt.sel .num{fill:#fff!important}
+.bt.sel .nm{fill:#fff!important}
+.halo{fill:none;stroke:#7a2a2a;stroke-width:5;animation:halo 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
+.halo.b{animation-delay:.8s}
+@keyframes halo{from{transform:scale(.6);opacity:.95}to{transform:scale(1.9);opacity:0}}
+.pinG{animation:bob 1.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.ent text{font:700 14px "Baloo Bhaijaan 2",sans-serif;fill:#fff;text-anchor:middle;dominant-baseline:central}
+.compass{position:absolute;inset-inline-end:12px;bottom:12px;z-index:3;background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:8px 10px;font-size:.75rem;max-width:62%}
+.compass .legend{margin-top:6px}
+.legend span{display:inline-flex;align-items:center;gap:4px;margin:2px 0 2px 8px;white-space:nowrap}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block;border:2px solid}
+.zoom{position:absolute;inset-inline-start:12px;top:12px;display:flex;flex-direction:column;gap:8px;z-index:3}
+.zoom button{width:46px;height:46px;border-radius:14px;background:var(--card);box-shadow:var(--shadow);font-size:1.4rem;font-weight:700;color:var(--green)}
+.zoom button.tg{font-size:.7rem;line-height:1.15}
+.halltabs{position:absolute;inset-inline-end:12px;top:12px;z-index:3;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:72%}
+.halltabs button{background:var(--card);box-shadow:var(--shadow);border-radius:12px;padding:.45rem .7rem;font-size:.82rem;font-weight:600;color:var(--ink)}
+.halltabs button.on{background:var(--green);color:#fff}
+
+.info{background:var(--card);border-top-left-radius:26px;border-top-right-radius:26px;padding:12px 18px 18px;box-shadow:0 -10px 30px -12px rgba(0,0,0,.25);position:relative;z-index:4;max-height:52vh;overflow:auto}
+.info .grip{width:44px;height:5px;border-radius:9px;background:#ddd3c2;margin:0 auto 10px}
+.info .row{display:flex;gap:12px;align-items:center}
+.badge{flex:none;border-radius:16px;color:#fff;padding:8px 12px;text-align:center;min-width:5rem}
+.badge b{display:block;font-size:1.3rem;direction:ltr}
+.badge span{font-size:.75rem;opacity:.95}
+.info .nm{font-weight:700;font-size:1.15rem;line-height:1.45}
+.info .ct{color:var(--muted);font-size:.9rem}
+.where{margin-top:12px;background:#f6f0e4;border-radius:14px;padding:10px 12px;font-size:.92rem;line-height:1.8;color:#2b2b26}
+body.hc .where{background:#fff;border:2px solid #000}
+.where button{display:inline;background:#fff;border:1px solid #e3d6bd;border-radius:8px;padding:1px 8px;margin:2px;font-size:.85rem;color:#1d2624}
+.actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn{flex:1;min-width:8.5rem;display:flex;align-items:center;justify-content:center;gap:6px;padding:.8rem;border-radius:14px;font-weight:600;font-size:.92rem;background:#f1ebdf;color:#1d2624}
+.btn.pri{background:var(--green);color:#fff}
+.btn.gold{background:var(--gold);color:#1d2624}
+.btn svg{width:18px;height:18px}
+.tour{display:none;align-items:center;gap:8px;margin-top:10px}
+.tour.on{display:flex}
+.tour .prog{flex:1;text-align:center;font-size:.85rem;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,40px);opacity:0;background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:12px;font-size:.9rem;z-index:90;transition:all .3s;pointer-events:none;max-width:90%;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+.vlist{flex:1;overflow:auto;padding:14px 16px 30px}
+.vh{display:flex;align-items:center;gap:8px;margin:14px 2px 8px;font-weight:700;color:var(--green)}
+.vh i{flex:1;height:1px;background:var(--line)}
+.vi{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:8px}
+.vi .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#efe8da;color:#1d2624;font-weight:700;font-size:.85rem;flex:none}
+.vi.done{opacity:.55}
+.vi.done .n{background:var(--green);color:#fff}
+.vi .tx{flex:1;min-width:0;cursor:pointer}
+.vi .tx b{display:block;font-size:.95rem}
+.vi .tx span{font-size:.8rem;color:var(--muted)}
+.vi .ck{width:40px;height:40px;border-radius:10px;background:#f1ebdf;color:#1d2624;display:grid;place-items:center}
+.vi .rm{width:34px;height:34px;color:#a99}
+.vfoot{padding:12px 16px;background:var(--card);border-top:1px solid var(--line);display:flex;gap:8px}
+footer{color:var(--muted);font-size:.8rem;text-align:center;margin-top:30px;line-height:1.8}
+@media(min-width:760px){ h1{font-size:2.7rem} .info{max-width:760px;margin:0 auto;width:100%} }
+
+/* ================= THEME: playful & bright ================= */
+:root{--paper:#fff8ef;--card:#ffffff;--ink:#23213a;--muted:#6b6880;--line:#f0e3d2;
+  --green:#0fa79a;--green2:#12b5a5;--maroon:#ff5d6c;--gold:#ffb703;--floor:#fffaf2;--floor2:#ffeeda;
+  --violet:#7c5cff;--coral:#ff6b57;--sun:#ffc23d;--sky:#3aa0ff;
+  --shadow:0 12px 28px -14px rgba(76,52,140,.35)}
+body:not(.hc){background:
+  radial-gradient(600px 380px at 105% -5%,#ffe1ec 0,transparent 60%),
+  radial-gradient(520px 360px at -10% 12%,#d9f7f2 0,transparent 60%),
+  radial-gradient(700px 500px at 50% 110%,#fff0c9 0,transparent 60%),var(--paper);background-attachment:fixed}
+body{letter-spacing:0}
+.hero{position:relative}
+.deco{position:absolute;inset:0;pointer-events:none;z-index:0}
+.deco span{position:absolute;font-size:1.6rem;opacity:.85;animation:float 6s ease-in-out infinite}
+.deco span:nth-child(1){top:-2px;left:2%;animation-delay:0s}
+.deco span:nth-child(2){top:-6px;left:18%;font-size:1.2rem;animation-delay:1.2s}
+.deco span:nth-child(3){bottom:58px;left:1%;font-size:1rem;animation-delay:.6s}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-10px) rotate(6deg)}}
+.brand,.stats{position:relative;z-index:1}
+h1{font-family:"Lalezar",sans-serif;font-weight:400;font-size:2.9rem;line-height:1.05;
+  background:linear-gradient(90deg,#7c5cff,#ff5d6c 55%,#ffb703);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 span{color:transparent}
+.logo{background:linear-gradient(140deg,#7c5cff,#ff5d6c);border-radius:22px;transform:rotate(-6deg)}
+.sub{font-size:1rem;color:var(--muted)}
+.stat{border:0;background:#fff;box-shadow:var(--shadow);font-weight:500}
+.stat:nth-child(1) b{color:#7c5cff}.stat:nth-child(2) b{color:#ff5d6c}.stat:nth-child(3) b{color:#0fa79a}
+.sect{font-family:"Lalezar",sans-serif;font-weight:400;font-size:1.45rem;color:var(--ink)}
+.sect::after{content:"";display:block;width:54px;height:6px;border-radius:9px;margin-top:2px;background:linear-gradient(90deg,#ffb703,#ff5d6c)}
+.a11y button{border:0;box-shadow:var(--shadow);background:#fff}
+.a11y button.on{background:#23213a;color:#fff}
+.hallcard{border:0;border-radius:24px;padding:12px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hallcard::before{content:"";position:absolute;inset:0 0 auto 0;height:7px}
+.hallcard[data-hall="h5"]{background:linear-gradient(170deg,#e3fbf7,#fff 60%)}.hallcard[data-hall="h5"]::before{background:#12b5a5}
+.hallcard[data-hall="h6"]{background:linear-gradient(170deg,#ffe8e4,#fff 60%)}.hallcard[data-hall="h6"]::before{background:#ff6b57}
+.hallcard[data-hall="h7"]{background:linear-gradient(170deg,#ece6ff,#fff 60%)}.hallcard[data-hall="h7"]::before{background:#7c5cff}
+.hallcard.kids{background:linear-gradient(160deg,#fff3c4,#ffe0ef 70%)}.hallcard.kids::before{background:linear-gradient(90deg,#ffb703,#ff5d9e,#3aa0ff)}
+.hallcard b{font-size:1.08rem;font-weight:700}
+.hallcard:hover{transform:translateY(-3px) rotate(-.6deg)}
+.field{border:0;border-radius:22px;padding:6px 8px 6px 14px;box-shadow:0 0 0 3px transparent,var(--shadow);background:
+  linear-gradient(#fff,#fff) padding-box,linear-gradient(90deg,#7c5cff,#ff5d6c,#ffb703) border-box;border:3px solid transparent}
+.field>svg{color:#7c5cff}
+.field input{font-size:1.12rem}
+.surprise{background:linear-gradient(120deg,#ff5d6c,#ff9f1c);border-radius:16px;padding:.65rem .95rem;font-weight:700;box-shadow:0 8px 18px -8px rgba(255,93,108,.8);animation:wiggle 4s ease-in-out infinite}
+@keyframes wiggle{0%,90%,100%{transform:none}93%{transform:rotate(-4deg) scale(1.04)}96%{transform:rotate(4deg) scale(1.04)}}
+.chip{border:0;box-shadow:0 4px 12px -8px rgba(76,52,140,.45);font-weight:600}
+.chip.on{background:linear-gradient(120deg,#7c5cff,#a26bff);color:#fff}
+.chips.countries .chip.on{background:linear-gradient(120deg,#ff5d6c,#ff8a5b)}
+.item{border:0;border-radius:22px;box-shadow:var(--shadow);transition:transform .15s}
+.item:hover{transform:translateY(-2px)}
+.tag{border-radius:18px;margin:6px;width:4.8rem}
+.t-h5{background:linear-gradient(150deg,#12b5a5,#0b8f84)}
+.t-h6{background:linear-gradient(150deg,#ff6b57,#e8455e)}
+.t-h7{background:linear-gradient(150deg,#7c5cff,#5a3fe0)}
+.t-kids{background:linear-gradient(150deg,#ffb703,#ff7a3d)}
+.name{font-weight:700;font-size:1.05rem}
+.name mark{background:#ffe066}
+.star.on{color:#ffb703}
+.dock button{background:linear-gradient(120deg,#7c5cff,#ff5d6c);color:#fff}
+.dock .cnt{background:#ffe066}
+.bar h2{font-family:"Lalezar",sans-serif;font-weight:400;font-size:1.35rem;color:var(--ink)}
+.icon{background:#f3eefe;color:#5a3fe0;border-radius:14px}
+.viewport{background:radial-gradient(circle at 15% 10%,#e3fbf7 0,transparent 40%),radial-gradient(circle at 90% 85%,#ffe8f0 0,transparent 45%),radial-gradient(circle at 80% 15%,#fff3c4 0,transparent 35%),#f6f1ff}
+.floor{stroke:#e9d9c3;stroke-width:4}
+.bt rect{stroke-width:2.5}
+.bt.sel rect{fill:#ff5d6c!important}
+.bt.nb rect{stroke:#ffb703!important}
+.halo{stroke:#ff5d6c}
+.pinG path{fill:#7c5cff}
+.zoom button{border-radius:16px;color:#5a3fe0}
+.halltabs button{border-radius:14px}
+.halltabs button.on{background:linear-gradient(120deg,#7c5cff,#a26bff);color:#fff}
+.ent rect{fill:#23213a}
+.info{border-top-left-radius:30px;border-top-right-radius:30px}
+.info .nm{font-weight:800;font-size:1.25rem}
+.badge{border-radius:20px}
+.where{background:linear-gradient(140deg,#fff7e0,#ffeef3);border-radius:18px}
+.where button{border:0;box-shadow:0 3px 10px -6px rgba(0,0,0,.4);border-radius:10px}
+.btn{border-radius:16px;font-weight:700}
+.btn.pri{background:linear-gradient(120deg,#0fa79a,#12c4b2)}
+.btn.gold{background:linear-gradient(120deg,#ffc23d,#ffb703)}
+.vi{border:0;box-shadow:var(--shadow);border-radius:18px}
+.vh{color:#7c5cff;font-family:"Lalezar",sans-serif;font-weight:400;font-size:1.15rem}
+.toast{background:#23213a;border-radius:16px}
+/* high-contrast keeps priority */
+body.hc{--paper:#fff;--card:#fff;--ink:#000;--muted:#1b1b1b;--line:#000}
+body.hc h1{background:none;color:#000}
+body.hc .field{background:#fff;border:3px solid #000}
+body.hc .item,body.hc .chip,body.hc .hallcard,body.hc .stat,body.hc .vi{border:2px solid #000;box-shadow:none}
+body.hc .chip.on,body.hc .halltabs button.on,body.hc .dock button,body.hc .surprise{background:#000;color:#fff}
+body.hc .viewport{background:#eee}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="a11y" role="toolbar" aria-label="إعدادات العرض">
+    <button id="fsBtn" aria-label="تكبير الخط"><b>أ</b><b style="font-size:1.2em">أ</b> حجم الخط</button>
+    <button id="hcBtn" aria-pressed="false">◐ وضوح عالي</button>
+  </div>
+  <header class="hero"><div class="deco" aria-hidden="true" style="top:-46px"><span>📚</span><span>✏️</span><span>⭐</span></div>
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><path d="M9 9.5h6M9 12h4"/></svg>
+      </div>
+      <div>
+        <h1>وين <span>الدار؟</span></h1>
+        <p class="sub">دليلك لأي دار نشر أو مكتبة في معرض الكويت الدولي للكتاب — للكبار والصغار</p>
+      </div>
+    </div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="sect">اختر قاعة وتجوّل فيها</div>
+  <div class="halls" id="halls"></div>
+
+  <div class="sect">أو ابحث مباشرة</div>
+  <div class="searchbox">
+    <div class="field">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" autocomplete="off" placeholder="اسم الدار، رقم الجناح أو الدولة…" aria-label="بحث عن دار نشر">
+      <button class="clear" id="clr" aria-label="مسح البحث"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      <button class="surprise" id="rnd" aria-label="اكتشف دار نشر جديدة">✨ اكتشف دار</button>
+    </div>
+    <div class="chips" id="hallChips"></div>
+    <div class="chips countries" id="ctyChips"></div>
+  </div>
+
+  <div class="meta"><span id="count"></span><span id="sortNote"></span></div>
+  <div id="hintBox"></div>
+  <div class="list" id="list"></div>
+  <button class="more" id="more" hidden>عرض المزيد</button>
+
+  <footer>
+    الخرائط مرسومة من مخططات وقوائم الأجنحة المعلنة لمعرض الكويت الدولي للكتاب.<br>
+    قد تتغيّر بعض الأجنحة أثناء المعرض — تأكد من اللوحات في القاعة.
+  </footer>
+</div>
+
+<div class="dock"><button id="dockBtn"><span class="cnt" id="dockCnt">0</span>قائمة زيارتي</button></div>
+
+<section class="sheet" id="mapSheet" aria-label="الخريطة">
+  <div class="bar">
+    <button class="icon" id="mapClose" aria-label="رجوع"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <h2 id="mapTitle">الخريطة</h2>
+  </div>
+  <div class="viewport" id="vp">
+    <div class="stage" id="stage"></div>
+    <div class="zoom">
+      <button id="zin" aria-label="تكبير">+</button>
+      <button id="zout" aria-label="تصغير">−</button>
+      <button id="zfit" class="tg" aria-label="القاعة كاملة">القاعة<br>كاملة</button>
+    </div>
+    <div class="halltabs" id="hallTabs"></div>
+    <div class="compass" id="compass"><button id="legBtn" aria-expanded="false" style="font-weight:700;font-size:.78rem">🎨 دليل الألوان</button><div class="legend" id="legend" hidden></div></div>
+  </div>
+  <div class="info" id="info"></div>
+</section>
+
+<section class="sheet" id="visitSheet" aria-label="قائمة زيارتي">
+  <div class="bar">
+    <button class="icon" id="visitClose" aria-label="رجوع"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <h2>قائمة زيارتي</h2>
+    <button class="icon" id="copyList" aria-label="نسخ القائمة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg></button>
+  </div>
+  <div class="vlist" id="vlist"></div>
+  <div class="vfoot"><button class="btn pri" id="startTour">ابدأ الجولة بالترتيب</button><button class="btn" id="clearList">تفريغ</button></div>
+</section>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+const H=window.HALLS, P=window.PUBS, ENT=window.ENT||{}, CORR=window.CORR||{};
+const HM={}; H.forEach(h=>HM[h.id]=h);
+const HALL_SHORT={h5:'قاعة 5',h6:'قاعة 6',h7:'قاعة 7',kids:'الطفل'};
+const HALL_EMO={h5:'📚',h6:'📖',h7:'🏛️',kids:'🧸'};
+const FLAGS={'الكويت':'🇰🇼','السعودية':'🇸🇦','الإمارات':'🇦🇪','قطر':'🇶🇦','البحرين':'🇧🇭','عمان':'🇴🇲','اليمن':'🇾🇪','العراق':'🇮🇶','مصر':'🇪🇬','سوريا':'🇸🇾','لبنان':'🇱🇧','الأردن':'🇯🇴','فلسطين':'🇵🇸','السودان':'🇸🇩','ليبيا':'🇱🇾','تونس':'🇹🇳','الجزائر':'🇩🇿','المغرب':'🇲🇦','موريتانيا':'🇲🇷','تركيا':'🇹🇷','بريطانيا':'🇬🇧','أمريكا':'🇺🇸','كندا':'🇨🇦','فرنسا':'🇫🇷','إيطاليا':'🇮🇹','إسبانيا':'🇪🇸','ألمانيا':'🇩🇪','السويد':'🇸🇪','بلغاريا':'🇧🇬','الصين':'🇨🇳','الهند':'🇮🇳','ماليزيا':'🇲🇾','سنغافورة':'🇸🇬','أستراليا':'🇦🇺'};
+// colour families by region
+const REG=[
+ {k:'kw',n:'الكويت',f:'#d3f6f1',s:'#12b5a5',t:'#0b5c54',c:['الكويت']},
+ {k:'ar',n:'الجزيرة العربية',f:'#fff0c2',s:'#f4a300',t:'#7a4f00',c:['السعودية','الإمارات','قطر','البحرين','عمان','اليمن']},
+ {k:'lv',n:'الشام والعراق',f:'#efe3ff',s:'#9b5cff',t:'#4b1fa0',c:['سوريا','لبنان','الأردن','فلسطين','العراق']},
+ {k:'eg',n:'مصر والسودان',f:'#ffe0dc',s:'#ff5d4f',t:'#8a1d12',c:['مصر','السودان']},
+ {k:'mg',n:'المغرب العربي',f:'#dcebff',s:'#2f80ff',t:'#0f3e8c',c:['تونس','الجزائر','المغرب','ليبيا','موريتانيا']},
+ {k:'wd',n:'من العالم',f:'#e9ecf3',s:'#6f7c95',t:'#2e3648',c:[]}];
+const regOf=c=>REG.find(r=>r.c.includes(c))||REG[5];
+const ALIAS={'Oxford University Press':'اكسفورد','National Geographic':'ناشيونال جيوغرافيك','SCHOLASTIC':'سكولاستك','Macmillan':'ماكميلان','Harvard Press':'هارفارد','Collins':'كولينز','Hachette':'هاشيت','NOSY CROW':'نوزي كرو','Goodword Books':'جود ورد','WHSmith':'سميث','Pinnacle Booksales':'بيناكل','Dorling Kindersley':'دورلنج','Usborne':'اسبورن','Walker Books':'ووكر','Penguin Group':'بنجوين بطريق','Thames & Hudson':'تيمز هدسون','THE ENGLISH BOOKSHOP':'انجلش بوك شوب','Kotopia':'كوتوبيا','Ali Gator for Publications':'علي جيتور','Akdem Publishing':'اكدم','NOON BOOKS':'نون بوكس','DAKWAH CORNER BOOKSTORE':'دعوة كورنر','Austin Macauley Publishers':'اوستن ماكولي','Learner Circle Pte Ltd':'ليرنر سيركل'};
+
+// ---------- normalisation & search ----------
+function norm(s){return (s||'').toLowerCase()
+  .replace(/[ً-ْـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي')
+  .replace(/ؤ/g,'و').replace(/ئ/g,'ي').replace(/[^؀-ۿa-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();}
+const STOP=new Set(['دار','ال','للنشر','النشر','والتوزيع','للتوزيع','ونشر','شركه','مكتبه','مؤسسه','منشورات','و','ناشرون','للطباعه']);
+function stripAl(w){return w.length>3&&w.startsWith('ال')?w.slice(2):(w.length>3&&w.startsWith('لل')?w.slice(2):w)}
+function grams(s){s=' '+s.replace(/ /g,'')+' ';const g=new Set();for(let i=0;i<s.length-2;i++)g.add(s.substr(i,3));return g}
+P.forEach((p,i)=>{p.i=i;p.alias=ALIAS[p.n]||'';p.nn=norm(p.n+' '+p.alias);p.words=p.nn.split(' ').map(stripAl);
+  p.key=norm(p.n+' '+p.alias).split(' ').filter(w=>!STOP.has(w)).map(stripAl).join(' ')||norm(p.n);p.g=grams(p.key);
+  p.bn=p.b.toLowerCase().replace(/[^a-z0-9]/g,'');p.cn=norm(p.c);
+  p.cx=p.r[0]+p.r[2]/2;p.cy=p.r[1]+p.r[3]/2;});
+
+function search(q){
+  const nq=norm(q); if(!nq) return {res:P.slice(),fuzzy:false,extra:0};
+  const toks=nq.split(' ').filter(Boolean).map(stripAl);
+  const bq=q.toLowerCase().replace(/[^a-z0-9]/g,'');
+  const out=[];
+  P.forEach(p=>{
+    let s=0;
+    if(bq && /\d/.test(bq) && (p.bn===bq||p.bn===('l'+bq))) s=1000;
+    else if(bq && /\d/.test(bq) && p.bn.startsWith(bq)) s=400;
+    if(p.cn===nq) s=Math.max(s,300);
+    if(!s){
+      let all=true,sc=0;
+      for(const t of toks){ if(STOP.has(t)&&toks.length>1) continue;
+        if(p.nn.includes(t)){sc+=10; if(p.words.some(w=>w.startsWith(t)))sc+=6; if(p.words.includes(t))sc+=8;}
+        else {all=false;break;} }
+      if(all&&sc){ s=sc+(p.key.startsWith(toks[0])?15:0)-p.n.length*.05; }
+    }
+    if(s) out.push([s,p]);
+  });
+  out.sort((a,b)=>b[0]-a[0]); const exact=out.map(x=>x[1]);
+  if(exact.length>=3 || (exact.length && exact[0].bn===bq)) return {res:exact,fuzzy:false,extra:0};
+  const key=toks.filter(t=>!STOP.has(t)).join(' ')||toks.join(' '); const qg=grams(key); const fz=[];
+  const qt=key.split(' ').filter(t=>t.length>=3);
+  const subseq=(t,w)=>{if(w.length<t.length||w.length-t.length>2)return false;let k=0;for(const ch of w){if(ch===t[k])k++;if(k===t.length)return true}return false};
+  const near=(t,w)=>{if(Math.abs(t.length-w.length)>1||t.length<3)return false;let diff=0,i=0,j=0;while(i<t.length&&j<w.length){if(t[i]===w[j]){i++;j++}else{diff++;if(t.length>w.length)i++;else if(w.length>t.length)j++;else{i++;j++}}if(diff>1)return false}return diff+(t.length-i)+(w.length-j)<=1};
+  P.forEach(p=>{if(exact.includes(p))return;let inter=0;qg.forEach(g=>{if(p.g.has(g))inter++});let d=2*inter/(qg.size+p.g.size);
+    const kw=p.key.split(' ');if(qt.length&&qt.every(t=>kw.some(w=>subseq(t,w)||near(t,w))))d=Math.max(d,.6);if(d>.36)fz.push([d,p])});
+  fz.sort((a,b)=>b[0]-a[0]); const extra=fz.slice(0,exact.length?5:12).map(x=>x[1]);
+  return {res:exact.concat(extra),fuzzy:!exact.length,extra:exact.length?extra.length:0};
+}
+function hl(name,q){
+  const toks=norm(q).split(' ').filter(t=>t.length>1&&!STOP.has(t)); if(!toks.length) return esc(name);
+  let map=[],ns='';
+  for(let i=0;i<name.length;i++){if(/[ً-ْـ]/.test(name[i]))continue;const c=norm(name[i]);ns+=(c||' ').slice(0,1);map.push(i);}
+  const marks=new Array(name.length).fill(false);
+  toks.forEach(t=>{let k=ns.indexOf(t);while(k>-1){for(let j=k;j<k+t.length&&j<map.length;j++)marks[map[j]]=true;k=ns.indexOf(t,k+1)}});
+  let o='',open=false;for(let i=0;i<name.length;i++){if(marks[i]&&!open){o+='<mark>';open=true}if(!marks[i]&&open){o+='</mark>';open=false}o+=esc(name[i])}
+  return o+(open?'</mark>':'');
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+
+// ---------- state ----------
+const LS='wain-aldar-visit', LSV='wain-aldar-view';
+let visit=[],done=[];
+try{const v=JSON.parse(localStorage.getItem(LS)||'{}');visit=(v.l||[]).filter(i=>P[i]);done=(v.d||[]).filter(i=>P[i]);}catch(e){}
+function saveV(){try{localStorage.setItem(LS,JSON.stringify({l:visit,d:done}))}catch(e){} updateDock();}
+let hallF='all', ctyF='all', shown=60, lastRes=[];
+const $=id=>document.getElementById(id);
+
+// ---------- accessibility: font size & contrast ----------
+let fs=1,hc=false;
+try{const v=JSON.parse(localStorage.getItem(LSV)||'{}');fs=v.fs||1;hc=!!v.hc}catch(e){}
+function applyView(){document.documentElement.classList.remove('fs2','fs3');if(fs>1)document.documentElement.classList.add('fs'+fs);
+  document.body.classList.toggle('hc',hc);$('hcBtn').classList.toggle('on',hc);$('hcBtn').setAttribute('aria-pressed',hc);
+  $('fsBtn').classList.toggle('on',fs>1);try{localStorage.setItem(LSV,JSON.stringify({fs,hc}))}catch(e){}}
+$('fsBtn').onclick=()=>{fs=fs%3+1;applyView();toast(['الخط عادي','الخط كبير','الخط كبير جداً'][fs-1])};
+$('hcBtn').onclick=()=>{hc=!hc;applyView()};
+applyView();
+
+// ---------- stats ----------
+const countries=[...new Set(P.map(p=>p.c))];
+$('stats').innerHTML=`<span class="stat"><b>${P.length}</b> جهة مشاركة</span><span class="stat"><b>${H.length}</b> قاعات</span><span class="stat"><b>${countries.length}</b> دولة</span>`;
+
+// ---------- drawing ----------
+function hallSVG(id,opts={}){
+  const h=HM[id],[bx,by,bw,bh]=h.box; const mini=!!opts.mini;
+  let s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${bx} ${by} ${bw} ${bh}" ${mini?'preserveAspectRatio="xMidYMid meet"':`width="${bw}" height="${bh}"`} id="${mini?'':'mapSvg'}">`;
+  if(!mini) s+=`<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.6" fill="#e2d6c0"/></pattern></defs>`;
+  if(CORR[id]){const pts=CORR[id].map(p=>p.join(',')).join(' ');
+    s+=`<polyline class="corrEdge" points="${pts}" stroke-width="${mini?150:150}"/><polyline class="corr" points="${pts}" stroke-width="${mini?144:144}"/>`;
+    if(!mini) s+=`<polyline points="${pts}" fill="none" stroke="url(#dots)" stroke-width="140" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>`;
+    s+=`<circle cx="1105" cy="1130" r="150" class="floor" style="stroke-width:3"/><circle cx="1105" cy="1130" r="146" fill="var(--floor)"/>`;
+    s+=`<rect x="815" y="185" width="372" height="240" rx="40" class="floor"/><rect x="1023" y="380" width="150" height="80" fill="var(--floor)"/>`;
+  } else {
+    s+=`<rect class="floor" x="${bx+12}" y="${by+12}" width="${bw-24}" height="${bh-24}" rx="46"/>`;
+    if(!mini) s+=`<rect x="${bx+12}" y="${by+12}" width="${bw-24}" height="${bh-24}" rx="46" fill="url(#dots)" opacity=".7"/>`;
+  }
+  P.forEach(p=>{ if(p.h!==id) return; const r=regOf(p.c),[x,y,w,hh]=p.r;
+    if(mini){ s+=`<rect x="${x+1.5}" y="${y+1.5}" width="${w-3}" height="${hh-3}" rx="4" fill="${r.s}" opacity=".75"/>`; return; }
+    const fsN=Math.max(9,Math.min(17,Math.min(w,hh)*.42));
+    const nmFs=Math.max(5,Math.min(9,w/9));
+    const maxCh=Math.max(4,Math.floor((w-4)/(nmFs*.55)));
+    let nm=p.n.length>maxCh?p.n.slice(0,maxCh-1)+'…':p.n;
+    s+=`<g class="bt ${visit.includes(p.i)?'v':''}" data-i="${p.i}"><rect x="${x+1.5}" y="${y+1.5}" width="${w-3}" height="${hh-3}" rx="5" fill="${r.f}" stroke="${r.s}"/>`+
+       `<text class="num" x="${x+w/2}" y="${y+hh/2}" font-size="${fsN}" style="font-size:${fsN}px" fill="${r.t}">${esc(p.b.replace('L-',''))}</text>`+
+       `<text class="nm" x="${x+w/2}" y="${y+hh/2+fsN*.55}" style="font-size:${nmFs}px">${esc(nm)}</text>`+
+       `<text class="vs" x="${x+w-7}" y="${y+9}" font-size="11" text-anchor="middle" dominant-baseline="central">⭐</text></g>`;
+  });
+  if(!mini)(ENT[id]||[]).forEach(([x,y,t])=>{const w=t.length*9+34;
+    s+=`<g class="ent"><rect x="${x-w/2}" y="${y-15}" width="${w}" height="30" rx="15" fill="#1d2624"/><text x="${x}" y="${y}">🚪 ${esc(t)}</text></g>`});
+  if(!mini) s+=`<g id="mk" style="display:none"><rect class="halo" id="halo1"/><rect class="halo b" id="halo2"/><g id="pinWrap"><g class="pinG"><path d="M0-58c-11 0-20 8.9-20 19.9 0 14.9 20 38.1 20 38.1s20-23.2 20-38.1C20-49.1 11-58 0-58z" fill="#7a2a2a" stroke="#fff" stroke-width="3"/><circle cx="0" cy="-38" r="7.5" fill="#fff"/></g></g></g>`;
+  return s+'</svg>';
+}
+$('halls').innerHTML=H.map(h=>{const n=P.filter(p=>p.h===h.id).length;
+  return `<button class="hallcard ${h.id==='kids'?'kids':''}" data-hall="${h.id}">${hallSVG(h.id,{mini:true})}<b>${HALL_EMO[h.id]} ${h.name}</b><small>${n} جهة</small></button>`}).join('');
+$('halls').onclick=e=>{const b=e.target.closest('[data-hall]');if(b)openHall(b.dataset.hall)};
+$('legBtn').onclick=e=>{e.stopPropagation();const L=$('legend');L.hidden=!L.hidden;$('legBtn').setAttribute('aria-expanded',!L.hidden)};
+$('legend').innerHTML=REG.map(r=>`<span><i style="background:${r.f};border-color:${r.s}"></i>${r.n}</span>`).join('');
+
+// ---------- chips ----------
+function renderHallChips(){
+  const cnt=id=>P.filter(p=>(id==='all'||p.h===id)&&(ctyF==='all'||p.c===ctyF)).length;
+  $('hallChips').innerHTML=[['all','كل القاعات'],...H.map(h=>[h.id,HALL_EMO[h.id]+' '+h.name])].map(([id,n])=>`<button class="chip ${hallF===id?'on':''}" data-h="${id}">${n}<small>${cnt(id)}</small></button>`).join('');
+}
+function renderCtyChips(){
+  const base=P.filter(p=>hallF==='all'||p.h===hallF); const c={}; base.forEach(p=>c[p.c]=(c[p.c]||0)+1);
+  const list=Object.keys(c).sort((a,b)=>c[b]-c[a]);
+  if(ctyF!=='all'&&!c[ctyF]) ctyF='all';
+  $('ctyChips').innerHTML=`<button class="chip ${ctyF==='all'?'on':''}" data-c="all">🌍 كل الدول</button>`+list.map(k=>`<button class="chip ${ctyF===k?'on':''}" data-c="${k}">${FLAGS[k]||''} ${k}<small>${c[k]}</small></button>`).join('');
+}
+$('hallChips').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;hallF=b.dataset.h;shown=60;renderCtyChips();renderHallChips();render();};
+$('ctyChips').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;ctyF=b.dataset.c;shown=60;renderCtyChips();renderHallChips();render();};
+
+// ---------- list ----------
+function card(p,q){
+  const on=visit.includes(p.i);
+  return `<div class="item" data-i="${p.i}" role="button" tabindex="0" aria-label="${esc(p.n)}، ${HM[p.h].name}، جناح ${esc(p.b)}">
+    <div class="tag t-${p.h}"><span class="bn">${esc(p.b)}</span><span class="hn">${HALL_SHORT[p.h]}</span></div>
+    <div class="body"><div class="name">${hl(p.n,q)}</div><div class="cty">${FLAGS[p.c]||''} ${esc(p.c)} · ${HM[p.h].name}</div></div>
+    <button class="star ${on?'on':''}" data-s="${p.i}" aria-label="أضف لقائمة زيارتي"><svg viewBox="0 0 24 24" fill="${on?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/></svg></button>
+  </div>`;
+}
+function render(){
+  const q=$('q').value; const {res,fuzzy,extra}=search(q);
+  lastRes=res.filter(p=>(hallF==='all'||p.h===hallF)&&(ctyF==='all'||p.c===ctyF));
+  $('count').textContent=lastRes.length?`${lastRes.length} نتيجة`:'';
+  $('sortNote').textContent=q.trim()?'':'مرتبة حسب القاعة والجناح';
+  $('hintBox').innerHTML=fuzzy&&lastRes.length?`<div class="hint">ما لقينا تطابق حرفي لـ «${esc(q)}» — يمكن تقصد وحدة من هذي؟</div>`:(extra?`<div class="hint">أضفنا تحت النتائج أسماء قريبة من «${esc(q)}» لو كان فيه خطأ إملائي.</div>`:'');
+  $('list').innerHTML=lastRes.length?lastRes.slice(0,shown).map(p=>card(p,q)).join(''):`<div class="empty">ما لقينا شي 🤔<br>جرّب جزء من الاسم، أو رقم الجناح مثل A-12</div>`;
+  $('more').hidden=lastRes.length<=shown;
+  $('clr').classList.toggle('on',!!q);
+}
+let t;$('q').addEventListener('input',()=>{clearTimeout(t);t=setTimeout(()=>{shown=60;render()},120)});
+$('clr').onclick=()=>{$('q').value='';render();$('q').focus()};
+$('more').onclick=()=>{shown+=80;render()};
+$('list').addEventListener('click',e=>{
+  const s=e.target.closest('[data-s]'); if(s){toggleVisit(+s.dataset.s);return}
+  const it=e.target.closest('.item'); if(it) openMap(+it.dataset.i);
+});
+$('list').addEventListener('keydown',e=>{if(e.key==='Enter'){const it=e.target.closest('.item');if(it)openMap(+it.dataset.i)}});
+$('rnd').onclick=()=>{const pool=lastRes.length?lastRes:P;openMap(pool[Math.floor(Math.random()*pool.length)].i,{surprise:true})};
+
+function toggleVisit(i){
+  const k=visit.indexOf(i); if(k>-1){visit.splice(k,1);toast('انشالت من قائمة زيارتي')} else {visit.push(i);toast('⭐ انضافت لقائمة زيارتي')}
+  saveV(); document.querySelectorAll(`[data-s="${i}"]`).forEach(b=>{const on=visit.includes(i);b.classList.toggle('on',on);b.querySelector('svg').setAttribute('fill',on?'currentColor':'none')});
+  const g=document.querySelector(`#mapSvg .bt[data-i="${i}"]`); if(g) g.classList.toggle('v',visit.includes(i));
+  if(cur===i) renderInfo();
+}
+function updateDock(){ $('dockCnt').textContent=visit.length; $('dockBtn').classList.toggle('on',visit.length>0); }
+function toast(m){const el=$('toast');el.textContent=m;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),1900)}
+
+// ---------- map engine ----------
+const vp=$('vp'),stage=$('stage');
+let curHall=null,cur=null,S=1,X=0,Y=0,tour=null,lastOpt={};
+function svgEl(){return $('mapSvg')}
+function apply(anim){stage.classList.toggle('anim',!!anim);stage.style.transform=`translate(${X}px,${Y}px) scale(${S})`;
+  const sv=svgEl(); if(sv) sv.classList.toggle('zoomed',S>=1.15);}
+function fitScale(){const b=HM[curHall].box;return Math.min(vp.clientWidth/b[2],(vp.clientHeight-70)/b[3])}
+function clamp(){const b=HM[curHall].box;const w=b[2]*S,hh=b[3]*S,vw=vp.clientWidth,vh=vp.clientHeight;
+  X=w<vw?(vw-w)/2:Math.min(0,Math.max(vw-w,X)); Y=hh<vh?(vh-hh)/2:Math.min(0,Math.max(vh-hh,Y));}
+function fit(anim){S=fitScale();X=0;Y=0;clamp();apply(anim)}
+const toStage=(x,y)=>{const b=HM[curHall].box;return [x-b[0],y-b[1]]};
+function focusOn(p,anim){const f=fitScale();S=Math.max(1.5,f*2.6);S=Math.min(S,2.6);
+  const [px,py]=toStage(p.cx,p.cy); X=vp.clientWidth/2-px*S; Y=vp.clientHeight*0.42-py*S; clamp(); apply(anim);}
+function loadHall(id){
+  if(curHall===id) return; curHall=id;
+  stage.innerHTML=hallSVG(id);
+  $('hallTabs').innerHTML=H.map(x=>`<button data-t="${x.id}" class="${x.id===id?'on':''}">${HALL_EMO[x.id]} ${HALL_SHORT[x.id]}</button>`).join('');
+}
+function mark(p){
+  const sv=svgEl(); if(!sv) return;
+  sv.querySelectorAll('.bt.sel,.bt.nb').forEach(g=>g.classList.remove('sel','nb'));
+  const mk=$('mk');
+  if(!p){sv.classList.remove('focus');mk.style.display='none';return}
+  sv.classList.add('focus');
+  const g=sv.querySelector(`.bt[data-i="${p.i}"]`); g.classList.add('sel'); g.parentNode.appendChild(g);
+  p.nb.forEach(j=>{const n=sv.querySelector(`.bt[data-i="${j}"]`);if(n)n.classList.add('nb')});
+  const [x,y,w,hh]=p.r;
+  ['halo1','halo2'].forEach(id=>{const r=$(id);r.setAttribute('x',x);r.setAttribute('y',y);r.setAttribute('width',w);r.setAttribute('height',hh);r.setAttribute('rx',8)});
+  $('pinWrap').setAttribute('transform',`translate(${p.cx},${p.r[1]-2}) scale(.55)`);
+  mk.style.display=''; mk.parentNode.appendChild(mk);
+}
+function openMap(i,opt={}){
+  const p=P[i]; cur=i; lastOpt=opt; const was=$('mapSheet').classList.contains('open');
+  $('mapSheet').classList.add('open'); document.body.style.overflow='hidden';
+  const sameHall=curHall===p.h; loadHall(p.h); $('mapTitle').textContent=HALL_EMO[p.h]+' '+HM[p.h].name;
+  mark(p); renderInfo(opt);
+  requestAnimationFrame(()=>{ if(!was||!sameHall){fit(false);requestAnimationFrame(()=>setTimeout(()=>focusOn(p,true),150))} else focusOn(p,true); });
+  try{history.replaceState(null,'','#'+p.h+'-'+p.b)}catch(e){}
+}
+function openHall(id){
+  $('mapSheet').classList.add('open');document.body.style.overflow='hidden';
+  cur=null;loadHall(id);$('mapTitle').textContent=HALL_EMO[id]+' '+HM[id].name;mark(null);
+  requestAnimationFrame(()=>fit(false));
+  const n=P.filter(p=>p.h===id).length;
+  $('info').innerHTML=`<div class="grip"></div><div class="where" style="margin-top:0;text-align:center">👆 اضغط على أي جناح عشان تعرف مين فيه<br><small>في ${HM[id].name} ${n} جهة · كبّر الخريطة بإصبعين وتطلع لك الأسماء داخل الأجنحة</small></div>`;
+  try{history.replaceState(null,'','#'+id)}catch(e){}
+}
+function whereText(p){
+  const b=HM[p.h].box; const fx=(p.cx-b[0])/b[2], fy=(p.cy-b[1])/b[3];
+  const hz=fx>.66?'الجهة اليمنى':fx<.34?'الجهة اليسرى':'الوسط';
+  const vt=fy<.34?'أعلى':fy>.66?'أسفل':'منتصف';
+  return `${vt} الخريطة، ${hz}`;
+}
+function sayText(p){const nb=p.nb.slice(0,2).map(j=>P[j].n).join(' و ');
+  return `${p.n}. في ${HM[p.h].name}، جناح ${p.b.replace('-',' ')}. مكانها ${whereText(p)}. وجنبها ${nb}.`}
+const canSpeak='speechSynthesis' in window;
+function renderInfo(opt={}){
+  if(cur==null) return; const p=P[cur]; const on=visit.includes(cur); const r=regOf(p.c);
+  const nb=p.nb.map(j=>`<button data-j="${j}">${esc(P[j].n)} <small>(${esc(P[j].b)})</small></button>`).join('');
+  let tourHtml='';
+  if(tour){const k=tour.indexOf(cur); if(k>-1) tourHtml=`<div class="tour on"><button class="btn" id="tPrev" ${k===0?'disabled style="opacity:.4"':''}>→ السابق</button><span class="prog">المحطة ${k+1} من ${tour.length}</span><button class="btn pri" id="tNext">${k===tour.length-1?'إنهاء ✓':'التالي ←'}</button></div>`;}
+  $('info').innerHTML=`<div class="grip"></div>
+   ${opt.surprise?'<div class="ct" style="margin-bottom:8px">✨ دار اكتشفناها لك — يمكن تلقى فيها كتابك الجاي</div>':''}
+   ${p.h==='kids'?'<div class="ct" style="margin-bottom:8px">🧸 هذي في صالة كتاب الطفل</div>':''}
+   <div class="row"><div class="badge t-${p.h}"><b>${esc(p.b)}</b><span>${HM[p.h].name}</span></div>
+   <div style="min-width:0"><div class="nm">${esc(p.n)}</div><div class="ct">${FLAGS[p.c]||''} ${esc(p.c)} · <span style="color:${r.s};font-weight:600">${r.n}</span></div></div></div>
+   <div class="where">🧭 مكانها: ${HM[p.h].name}، ${whereText(p)}.<br>📍 جيرانها (بإطار ذهبي على الخريطة): ${nb}</div>
+   <div class="actions">
+     <button class="btn ${on?'gold':'pri'}" id="addV">${on?'★ في قائمة زيارتي':'☆ أضف لقائمة زيارتي'}</button>
+     ${canSpeak?'<button class="btn" id="say">🔊 اقرأ لي المكان</button>':''}
+     <button class="btn" id="cpy">📋 انسخ الموقع</button>
+   </div>${tourHtml}`;
+}
+$('info').addEventListener('click',e=>{
+  const j=e.target.closest('[data-j]'); if(j){openMap(+j.dataset.j);return}
+  if(e.target.closest('#addV')){toggleVisit(cur);return}
+  if(e.target.closest('#say')){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(sayText(P[cur]));u.lang='ar';u.rate=.9;
+    const v=speechSynthesis.getVoices().find(v=>/^ar/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u);}catch(err){toast('القراءة الصوتية ما تشتغل على هذا الجهاز')}return}
+  if(e.target.closest('#cpy')){const p=P[cur];const txt=`${p.n} — ${HM[p.h].name}، جناح ${p.b} (معرض الكويت الدولي للكتاب)`;
+    (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast('انتسخ ✓ أرسله لمن تبي'),()=>toast(txt));return}
+  if(e.target.closest('#tNext')){const k=tour.indexOf(cur);if(!done.includes(cur)){done.push(cur);saveV()}
+    if(k<tour.length-1)openMap(tour[k+1]);else{tour=null;toast('🎉 خلصت جولتك!');openVisit()}return}
+  if(e.target.closest('#tPrev')){const k=tour.indexOf(cur);if(k>0)openMap(tour[k-1]);return}
+});
+$('hallTabs').onclick=e=>{const b=e.target.closest('[data-t]');if(b){tour=null;openHall(b.dataset.t)}};
+function closeMap(){$('mapSheet').classList.remove('open');document.body.style.overflow='';tour=null;try{speechSynthesis.cancel()}catch(e){}try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
+$('mapClose').onclick=closeMap;
+function zoomAt(f,cx,cy,anim){const ns=Math.min(5,Math.max(fitScale()*.9,S*f));X=cx-(cx-X)*ns/S;Y=cy-(cy-Y)*ns/S;S=ns;clamp();apply(anim)}
+$('zin').onclick=()=>zoomAt(1.5,vp.clientWidth/2,vp.clientHeight/2,true);
+$('zout').onclick=()=>zoomAt(1/1.5,vp.clientWidth/2,vp.clientHeight/2,true);
+$('zfit').onclick=()=>fit(true);
+vp.addEventListener('wheel',e=>{e.preventDefault();const r=vp.getBoundingClientRect();zoomAt(e.deltaY<0?1.15:1/1.15,e.clientX-r.left,e.clientY-r.top)},{passive:false});
+const pts=new Map();let moved=0,pinch0=null,lastTap=0;
+const ui=e=>e.target.closest('.zoom,.halltabs,.compass');
+vp.addEventListener('pointerdown',e=>{if(ui(e))return;vp.setPointerCapture(e.pointerId);pts.set(e.pointerId,{x:e.clientX,y:e.clientY});moved=0;vp.classList.add('drag');
+  if(pts.size===2){const [a,b]=[...pts.values()];pinch0={d:Math.hypot(a.x-b.x,a.y-b.y),s:S}}});
+vp.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;const pr=pts.get(e.pointerId);const dx=e.clientX-pr.x,dy=e.clientY-pr.y;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});moved+=Math.abs(dx)+Math.abs(dy);
+  if(pts.size===1){X+=dx;Y+=dy;clamp();apply(false)}
+  else if(pts.size===2&&pinch0){const [a,b]=[...pts.values()];const d=Math.hypot(a.x-b.x,a.y-b.y);const r=vp.getBoundingClientRect();zoomAt((pinch0.s*d/pinch0.d)/S,(a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top,false)}});
+function up(e){if(!pts.has(e.pointerId))return;pts.delete(e.pointerId);if(pts.size<2)pinch0=null;if(!pts.size)vp.classList.remove('drag');
+  if(moved<8&&!pts.size&&!ui(e)){const now=Date.now();const r=vp.getBoundingClientRect();
+    const b=HM[curHall].box;const mx=(e.clientX-r.left-X)/S+b[0],my=(e.clientY-r.top-Y)/S+b[1];
+    let hit=P.find(p=>p.h===curHall&&mx>=p.r[0]&&mx<=p.r[0]+p.r[2]&&my>=p.r[1]&&my<=p.r[1]+p.r[3]);
+    if(!hit){let bd=1e9;P.forEach(p=>{if(p.h!==curHall)return;const d=Math.hypot(p.cx-mx,p.cy-my);if(d<bd){bd=d;hit=p}});if(bd>30/Math.min(S,1)+8)hit=null}
+    if(hit){tour=tour&&tour.includes(hit.i)?tour:null;openMap(hit.i)}
+    else if(now-lastTap<320) zoomAt(1.6,e.clientX-r.left,e.clientY-r.top,true);
+    lastTap=now;}}
+vp.addEventListener('pointerup',up);vp.addEventListener('pointercancel',up);
+window.addEventListener('resize',()=>{if(!curHall||!$('mapSheet').classList.contains('open'))return;if(cur!=null&&P[cur].h===curHall)focusOn(P[cur],false);else fit(false)});
+
+// ---------- visit list & route ----------
+const HALL_ORDER=['h5','h6','h7','kids'];
+function route(){
+  const out=[];HALL_ORDER.forEach(h=>{let rest=visit.filter(i=>P[i].h===h);if(!rest.length)return;
+    rest.sort((a,b)=>P[b].cx-P[a].cx);let c=rest.shift();const seq=[c];
+    while(rest.length){let bi=0,bd=1e9;rest.forEach((r,k)=>{const d=Math.hypot(P[r].cx-P[c].cx,P[r].cy-P[c].cy);if(d<bd){bd=d;bi=k}});c=rest.splice(bi,1)[0];seq.push(c)}
+    out.push(...seq)});return out;}
+function openVisit(){$('visitSheet').classList.add('open');document.body.style.overflow='hidden';renderVisit()}
+function renderVisit(){
+  const r=route(); if(!r.length){$('vlist').innerHTML='<div class="empty">قائمتك فاضية ✨<br>اضغط النجمة جنب أي دار عشان تضيفها، وبنرتّب لك طريق المشي.</div>';return}
+  let h='',n=0,last='';
+  r.forEach(i=>{const p=P[i];if(p.h!==last){last=p.h;h+=`<div class="vh">${HALL_EMO[p.h]} ${HM[p.h].name}<i></i></div>`}n++;const d=done.includes(i);
+    h+=`<div class="vi ${d?'done':''}"><span class="n">${d?'✓':n}</span><div class="tx" data-go="${i}"><b>${esc(p.n)}</b><span>جناح <bdi>${esc(p.b)}</bdi> · ${FLAGS[p.c]||''} ${esc(p.c)}</span></div>
+    <button class="ck" data-ck="${i}" aria-label="زرتها">${d?'↺':'✓'}</button><button class="rm" data-rm="${i}" aria-label="حذف">✕</button></div>`});
+  const left=r.filter(i=>!done.includes(i)).length;
+  $('vlist').innerHTML=`<div style="color:var(--muted);font-size:.85rem">${r.length} محطة · باقي ${left} — رتبناها لك داخل كل قاعة من الأقرب للأقرب.</div>`+h;
+}
+$('vlist').onclick=e=>{const g=e.target.closest('[data-go]'),c=e.target.closest('[data-ck]'),m=e.target.closest('[data-rm]');
+  if(c){const i=+c.dataset.ck,k=done.indexOf(i);k>-1?done.splice(k,1):done.push(i);saveV();renderVisit()}
+  else if(m){const i=+m.dataset.rm;visit.splice(visit.indexOf(i),1);done=done.filter(x=>x!==i);saveV();renderVisit();render()}
+  else if(g){tour=route();closeVisit();openMap(+g.dataset.go)}};
+function closeVisit(){$('visitSheet').classList.remove('open');document.body.style.overflow=''}
+$('visitClose').onclick=closeVisit;$('dockBtn').onclick=openVisit;
+$('startTour').onclick=()=>{const r=route();if(!r.length)return;tour=r;const first=r.find(i=>!done.includes(i));closeVisit();openMap(first!=null?first:r[0])};
+$('clearList').onclick=e=>{const b=e.currentTarget;if(b.dataset.sure){visit=[];done=[];saveV();renderVisit();render();b.textContent='تفريغ';delete b.dataset.sure}else{b.dataset.sure=1;b.textContent='متأكد؟';setTimeout(()=>{b.textContent='تفريغ';delete b.dataset.sure},2500)}};
+$('copyList').onclick=()=>{const r=route();if(!r.length)return;let last='',txt='📚 قائمة زيارتي — معرض الكويت الدولي للكتاب\n';r.forEach((i,k)=>{const p=P[i];if(p.h!==last){last=p.h;txt+=`\n${HM[p.h].name}:\n`}txt+=`${k+1}. ${p.n} — جناح ${p.b}\n`});
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast('انتسخت القائمة ✓'),()=>toast('ما قدرت أنسخ — جرّب من متصفح ثاني'))};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('visitSheet').classList.contains('open'))closeVisit();else if($('mapSheet').classList.contains('open'))closeMap()}});
+
+// ---------- deep links: #h6-A-31 or #h6 ----------
+function fromHash(){const h=decodeURIComponent(location.hash.slice(1));if(!h)return;
+  if(HM[h]){openHall(h);return}
+  const m=h.match(/^(h5|h6|h7|kids)-(.+)$/);if(!m)return;
+  const p=P.find(x=>x.h===m[1]&&x.b.toLowerCase()===m[2].toLowerCase());if(p)openMap(p.i)}
+window.addEventListener('hashchange',fromHash);
+
+renderHallChips();renderCtyChips();render();updateDock();fromHash();
+})();
+</script>
+</body>
+</html>
